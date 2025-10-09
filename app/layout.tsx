@@ -16,8 +16,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'NoteHub - homework-next.js-8',
-  description: '08-zustand',
+  title: 'NoteHub',
+  description:
+    'NoteHub is an intuitive and reliable application developed to efficiently organize, manage, and access personal notes.',
+  openGraph: {
+    title: 'NoteHub',
+    description:
+      'NoteHub is an intuitive and reliable application developed to efficiently organize, manage, and access personal notes.',
+    url: 'https://08-zustand-three-delta.vercel.app/',
+    images: [
+      {
+        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'NoteHUb',
+      },
+    ],
+    type: 'article',
+  },
 };
 
 export default function RootLayout({

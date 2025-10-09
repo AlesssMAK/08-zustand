@@ -1,5 +1,25 @@
 import React from 'react';
 import css from './NotFound.module.css';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Not-found',
+  description: 'No such page exists',
+  openGraph: {
+    title: 'Not-found',
+    description: 'No such page exists',
+    url: 'https://08-zustand-three-delta.vercel.app/not-found',
+    images: [
+      {
+        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'NoteHub',
+      },
+    ],
+    type: 'article',
+  },
+};
 
 const NotFound = () => {
   return (
