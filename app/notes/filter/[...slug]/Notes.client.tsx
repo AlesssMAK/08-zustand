@@ -5,18 +5,16 @@ import { useDebounce } from 'use-debounce';
 import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { fetchNotes } from '@/lib/api';
-import Modal from '@/components/Modal/Modal';
-import NoteForm from '@/components/NoteForm/NoteForm';
 import NoteList from '@/components/NoteList/NoteList';
 import Pagination from '@/components/Pagination/Pagination';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import css from './page.module.css';
 import Text from '@/components/Text/Text';
+import Link from 'next/link';
 
 const NoteClient = ({ tag }: { tag?: string }) => {
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data, isSuccess, isLoading, isFetching } = useQuery({
@@ -37,18 +35,8 @@ const NoteClient = ({ tag }: { tag?: string }) => {
     );
   }
 
-  const openModal = () => setIsModalOpen(true);
-
-  const closeModal = () => setIsModalOpen(false);
-
   return (
     <div className={css.app}>
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} />
-        </Modal>
-      )}
-
       <header className={css.toolbar}>
         <Toaster />
         <SearchBox
@@ -65,12 +53,9 @@ const NoteClient = ({ tag }: { tag?: string }) => {
             onPageChange={(newPage) => setPage(newPage)}
           />
         )}
-        <button
-          className={css.button}
-          onClick={openModal}
-        >
-          Create note +
-        </button>
+        <Link href="/notes/action/create">
+          <button className={css.button}>Create note +</button>
+        </Link>
       </header>
       {isSuccess && data?.notes?.length > 0 && <NoteList notes={data?.notes} />}
     </div>
