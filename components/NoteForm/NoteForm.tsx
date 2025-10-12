@@ -5,10 +5,23 @@ import { createNote } from '@/lib/api';
 import type { NoteTag } from '../../types/note';
 import css from './NoteForm.module.css';
 import { useRouter } from 'next/navigation';
+import { useNoteDraft } from '@/lib/store/noteStore';
 
 const NoteForm = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { draft, setDraft, clearDraft } = useNoteDraft();
+
+  const handleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setDraft({
+      ...draft,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -20,6 +33,7 @@ const NoteForm = () => {
       return await createNote(newNote);
     },
     onSuccess: () => {
+      clearDraft();
       queryClient.invalidateQueries({ queryKey: ['notes'] });
       router.back();
     },
@@ -40,6 +54,11 @@ const NoteForm = () => {
           type="text"
           name="title"
           className={css.input}
+          minLength={3}
+          maxLength={50}
+          required
+          defaultValue={draft?.title}
+          onChange={handleChange}
         />
       </div>
 
@@ -50,6 +69,9 @@ const NoteForm = () => {
           name="content"
           rows={8}
           className={css.textarea}
+          maxLength={500}
+          defaultValue={draft?.content}
+          onChange={handleChange}
         />
       </div>
 
@@ -59,6 +81,9 @@ const NoteForm = () => {
           id="tag"
           name="tag"
           className={css.select}
+          required
+          defaultValue={draft?.tag}
+          onChange={handleChange}
         >
           <option value="Todo">Todo</option>
           <option value="Work">Work</option>
@@ -70,6 +95,7 @@ const NoteForm = () => {
 
       <div className={css.actions}>
         <button
+          onClick={() => router.back()}
           type="button"
           className={css.cancelButton}
         >
