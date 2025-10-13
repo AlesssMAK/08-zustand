@@ -16,7 +16,7 @@ const Header = () => {
           <li>
             <Link href="/">Home</Link>
           </li>
-          <li>
+          <li className={css.menu}>
             <TagsMenu />
           </li>
         </ul>

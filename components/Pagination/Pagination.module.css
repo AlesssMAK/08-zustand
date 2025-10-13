@@ -32,6 +32,11 @@
   transition: border-color 0.2s ease;
 }
 
+.pagination li.selected {
+  background-color: #010101;
+  color: #fff;
+}
+
 .pagination li:hover {
   background-color: rgb(255, 107, 10);
   color: #fff;
@@ -51,4 +56,9 @@
 .active a {
   color: #fff !important;
   font-weight: 500;
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

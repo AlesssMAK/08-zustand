@@ -29,6 +29,7 @@
 .select:focus {
   outline: none;
   border-color: rgb(255, 107, 10);
+  box-shadow: 0 0 0 2px rgba(255, 107, 10, 0.4);
 }
 
 .actions {
